@@ -1,0 +1,17 @@
+service: serverless-aws-terraform-intro
+
+frameworkVersion: '3'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-central-1
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
