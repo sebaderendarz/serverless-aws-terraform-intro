@@ -7,10 +7,28 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-central-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action: dynamodb:*
+      # TODO take ARN from SSM Store instead. App will not work with other instance
+      # of table created with terraform config located in `infractructure` folder.
+      Resource: arn:aws:dynamodb:eu-central-1:705130529207:table/ChatMessages
 
 functions:
-  hello:
-    handler: handler.hello
+  addChatMessage:
+    handler: src/addChatMessage.handler
+    events:
+      - httpApi:
+          path: /
+          method: post
+  fetchChatMessage:
+    handler: src/fetchChatMessage.handler
+    events:
+      - httpApi:
+          path: /{id}
+          method: get
+  fetchChatMessages:
+    handler: src/fetchChatMessages.handler
     events:
       - httpApi:
           path: /
