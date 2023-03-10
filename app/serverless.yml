@@ -10,8 +10,8 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action: dynamodb:*
-      # TODO take ARN from SSM Store instead. App will not work with other instance
-      # of table created with terraform config located in `infractructure` folder.
+      # NOTE: App will not work when DynamoDB table ARN will be different
+      # than the one specified below.
       Resource: arn:aws:dynamodb:eu-central-1:705130529207:table/ChatMessages
 
 functions:
